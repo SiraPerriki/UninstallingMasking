@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uninstalling MASKING.exe - Windows 95</title>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing:border-box; }
+html, body { margin:0; min-height:100%; }
+
+:root {
+  --desktop:#23105f;
+  --gray:#c0c0c0;
+  --light:#ffffff;
+  --mid:#808080;
+  --dark:#000000;
+  --navy:#000080;
+  --fuchsia:#ff00b8;
+  --green:#00a800;
+}
+
+body {
+  min-height:100vh;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(255,70,216,.12), transparent 23%),
+    radial-gradient(circle at 84% 72%, rgba(64,241,255,.1), transparent 25%),
+    linear-gradient(45deg, rgba(255,255,255,.045) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(0,0,0,.12) 25%, transparent 25%),
+    var(--desktop);
+  background-size:22px 22px;
+  color:#000;
+  font-family:"MS Sans Serif", Tahoma, Arial, sans-serif;
+  font-size:12px;
+}
+
+.desktop {
+  min-height:calc(100vh - 36px);
+  padding:16px 18px 46px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.shortcut {
+  position:absolute;
+  left:22px;
+  top:26px;
+  width:72px;
+  text-align:center;
+  color:#fff;
+  text-shadow:1px 1px #000;
+}
+
+.shortcut-icon {
+  width:48px;
+  height:56px;
+  margin:0 auto 4px;
+  position:relative;
+}
+
+.shortcut-icon img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  image-rendering:auto;
+}
+
+.window {
+  width:min(780px, calc(100vw - 36px));
+  min-height:0;
+  background:var(--gray);
+  border:2px solid;
+  border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:2px 2px 0 rgba(0,0,0,.35);
+}
+
+.titlebar {
+  height:26px;
+  margin:2px;
+  padding:3px 4px 3px 8px;
+  background:linear-gradient(90deg, var(--navy), #1084d0);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-weight:bold;
+}
+
+.title-controls {
+  display:flex;
+  gap:2px;
+}
+
+.control {
+  width:18px;
+  height:18px;
+  border:2px solid;
+  border-color:var(--light) var(--dark) var(--dark) var(--light);
+  background:var(--gray);
+  color:#000;
+  line-height:12px;
+  text-align:center;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.chrome {
+  margin:0 2px 2px;
+  border:2px solid;
+  border-color:var(--light) var(--mid) var(--mid) var(--light);
+  position:relative;
+  overflow:hidden;
+}
+
+.menu {
+  display:flex;
+  gap:18px;
+  padding:4px 8px;
+  border-bottom:1px solid var(--mid);
+}
+
+.toolbar {
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:12px;
+  padding:8px 10px;
+  border-top:1px solid var(--light);
+  border-bottom:2px solid;
+  border-bottom-color:var(--mid);
+}
+
+.overall-title {
+  font-weight:bold;
+  letter-spacing:.2px;
+}
+
+.overall-percent {
+  min-width:44px;
+  text-align:right;
+  font-weight:bold;
+}
+
+.progress {
+  grid-column:1 / -1;
+  height:21px;
+  padding:2px;
+  background:#fff;
+  border:2px solid;
+  border-color:var(--mid) var(--light) var(--light) var(--mid);
+  overflow:hidden;
+}
+
+.progress-fill {
+  width:0%;
+  height:100%;
+  background:
+    repeating-linear-gradient(90deg, var(--navy) 0 13px, #fff 13px 15px);
+  transition:width .22s linear;
+}
+
+.content {
+  display:grid;
+  grid-template-columns:190px 1fr;
+  gap:0;
+  min-height:0;
+}
+
+.brand-panel {
+  padding:12px;
+  border-right:2px solid;
+  border-right-color:var(--mid);
+  background:#d7d7d7;
+}
+
+.program-icon {
+  width:88px;
+  height:106px;
+  margin:0 auto 10px;
+  position:relative;
+}
+
+.program-icon img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.mask-name {
+  color:var(--fuchsia);
+  font-size:18px;
+  line-height:1.05;
+  font-weight:bold;
+  text-align:center;
+  text-transform:uppercase;
+  text-shadow:1px 1px #fff;
+  word-break:break-word;
+}
+
+.side-note {
+  margin-top:12px;
+  padding:8px;
+  background:#fff;
+  border:2px solid;
+  border-color:var(--mid) var(--light) var(--light) var(--mid);
+  line-height:1.4;
+}
+
+.main-panel {
+  padding:12px;
+  border-left:1px solid var(--light);
+}
+
+.headline {
+  margin:0 0 8px;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.subhead {
+  margin-bottom:10px;
+  line-height:1.45;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.group {
+  border:2px solid;
+  border-color:var(--mid) var(--light) var(--light) var(--mid);
+  background:#fff;
+  min-height:130px;
+}
+
+.group-title {
+  padding:5px 7px;
+  background:var(--gray);
+  border-bottom:1px solid var(--mid);
+  font-weight:bold;
+}
+
+.modules {
+  list-style:none;
+  margin:0;
+  padding:7px;
+}
+
+.modules li {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  min-height:19px;
+  color:#333;
+}
+
+.box {
+  width:13px;
+  height:13px;
+  border:2px solid;
+  border-color:var(--mid) var(--light) var(--light) var(--mid);
+  background:#fff;
+  flex:0 0 auto;
+}
+
+.modules li.done .box {
+  background:
+    linear-gradient(45deg, transparent 40%, #000 40% 56%, transparent 56%),
+    linear-gradient(-45deg, transparent 48%, #000 48% 62%, transparent 62%),
+    #fff;
+}
+
+.modules li.done { color:#777; text-decoration:line-through; }
+.modules li.active { color:var(--fuchsia); font-weight:bold; }
+
+.visual-stage {
+  position:relative;
+  min-height:190px;
+  padding:8px;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    var(--gray);
+  overflow:hidden;
+}
+
+.trash {
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:116px;
+  height:148px;
+  transform:translate(-50%, -50%);
+  border:0;
+  background:transparent;
+}
+
+.trash-frame {
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:130%;
+  height:130%;
+  transform:translate(-50%, -50%);
+  object-fit:contain;
+  image-rendering:auto;
+}
+
+.trash-label {
+  position:absolute;
+  left:50%;
+  bottom:12px;
+  transform:translateX(-50%);
+  font-size:11px;
+  white-space:nowrap;
+}
+
+.log {
+  height:124px;
+  overflow:hidden;
+  padding:8px;
+  background:#000;
+  color:#00ff66;
+  font-family:"Courier New", monospace;
+  font-size:12px;
+  line-height:1.45;
+}
+
+.log-line { white-space:nowrap; }
+
+.footer {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:10px;
+}
+
+.status {
+  padding:5px 8px;
+  min-width:250px;
+  border:2px solid;
+  border-color:var(--mid) var(--light) var(--light) var(--mid);
+  background:#d7d7d7;
+}
+
+.buttons { display:flex; gap:8px; }
+
+button {
+  min-width:82px;
+  height:26px;
+  background:var(--gray);
+  border:2px solid;
+  border-color:var(--light) var(--dark) var(--dark) var(--light);
+  font-family:inherit;
+  font-size:12px;
+}
+
+button:active {
+  border-color:var(--dark) var(--light) var(--light) var(--dark);
+  padding-top:2px;
+}
+
+.taskbar {
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:36px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:3px 6px;
+  background:var(--gray);
+  border-top:2px solid var(--light);
+}
+
+.start {
+  height:28px;
+  padding:2px 10px 2px 6px;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  border:2px solid;
+  border-color:var(--light) var(--dark) var(--dark) var(--light);
+  font-weight:bold;
+}
+
+.start-mark {
+  width:16px;
+  height:16px;
+  background:linear-gradient(135deg, #f00 0 25%, #0a0 25% 50%, #00f 50% 75%, #ff0 75%);
+  border:1px solid #000;
+}
+
+.task {
+  height:28px;
+  min-width:190px;
+  padding:5px 8px;
+  border:2px solid;
+  border-color:var(--dark) var(--light) var(--light) var(--dark);
+  background:#d7d7d7;
+}
+
+.clock {
+  margin-left:auto;
+  height:28px;
+  min-width:92px;
+  padding:5px 8px;
+  text-align:center;
+  border:2px solid;
+  border-color:var(--mid) var(--light) var(--light) var(--mid);
+}
+
+.screensaver {
+  position:absolute;
+  inset:0;
+  z-index:30;
+  visibility:hidden;
+  opacity:0;
+  pointer-events:none;
+  overflow:hidden;
+  min-height:100%;
+  background:
+    radial-gradient(circle at 24% 28%, rgba(255,67,216,.18), transparent 24%),
+    radial-gradient(circle at 78% 70%, rgba(77,245,255,.18), transparent 26%),
+    linear-gradient(135deg, #080014 0%, #01070d 48%, #00131f 100%);
+  color:#fff;
+  font-family:"Pixelify Sans", Fixedsys, "Fixedsys Excelsior", Terminal, "Lucida Console", "Courier New", monospace;
+  -webkit-font-smoothing:none;
+  font-smooth:never;
+  text-rendering:geometricPrecision;
+  transition:opacity 1.45s ease, visibility 0s linear 1.45s;
+}
+
+.screensaver.show {
+  visibility:visible;
+  opacity:1;
+  pointer-events:auto;
+  transition:opacity 1.45s ease, visibility 0s;
+}
+
+.scr-label {
+  position:absolute;
+  left:12px;
+  top:10px;
+  color:#c0c0c0;
+  font-family:"Pixelify Sans", Fixedsys, "Fixedsys Excelsior", Terminal, "Lucida Console", monospace;
+  font-size:12px;
+  letter-spacing:1px;
+}
+
+.starfield {
+  position:absolute;
+  inset:0;
+}
+
+.scr-star {
+  position:absolute;
+  left:var(--x);
+  top:var(--y);
+  color:var(--c);
+  font-size:var(--s);
+  text-shadow:0 0 10px currentColor;
+  animation:scr-twinkle var(--d) steps(2, end) infinite;
+}
+
+.scr-center {
+  position:absolute;
+  left:50%;
+  top:48%;
+  width:90%;
+  transform:translate(-50%, -50%);
+  text-align:center;
+  opacity:0;
+  transform:translate(-50%, -46%);
+}
+
+.screensaver.show .scr-center {
+  opacity:1;
+  transform:translate(-50%, -50%);
+  transition:opacity 1.2s ease .55s, transform 1.2s ease .55s;
+}
+
+.scr-title {
+  color:#ff4bd8;
+  font-family:"Press Start 2P", "Pixelify Sans", Fixedsys, Terminal, monospace;
+  font-size:clamp(24px, 3.25vw, 34px);
+  line-height:1.35;
+  font-weight:bold;
+  letter-spacing:0;
+  text-transform:uppercase;
+  text-shadow:
+    2px 2px 0 #fff4ff,
+    4px 4px 0 #21106f,
+    7px 7px 0 #49f4ff,
+    9px 9px 0 #12304f;
+}
+
+.scr-subtitle {
+  margin-top:18px;
+  color:#55f6ff;
+  font-family:"Press Start 2P", "Pixelify Sans", Fixedsys, Terminal, monospace;
+  font-size:clamp(13px, 1.65vw, 18px);
+  font-weight:bold;
+  line-height:1.45;
+  letter-spacing:0;
+  text-shadow:
+    2px 2px 0 #21106f,
+    4px 4px 0 #ff4bd8;
+}
+
+.scr-detail {
+  margin-top:16px;
+  color:#fff46a;
+  font-family:"Pixelify Sans", Fixedsys, Terminal, monospace;
+  font-size:17px;
+  font-weight:600;
+  letter-spacing:1px;
+  text-shadow:2px 2px 0 #21106f;
+}
+
+.scr-bounce {
+  position:absolute;
+  left:18px;
+  top:78px;
+  color:#00ff66;
+  font-family:"Pixelify Sans", Fixedsys, Terminal, monospace;
+  font-size:18px;
+  font-weight:bold;
+  letter-spacing:1px;
+  text-shadow:2px 2px 0 #000080;
+  animation:scr-bounce 13s linear infinite alternate;
+}
+
+.scr-registered {
+  position:absolute;
+  right:14px;
+  bottom:12px;
+  color:#c0c0c0;
+  font-family:"Pixelify Sans", Fixedsys, Terminal, monospace;
+  font-size:15px;
+  letter-spacing:1px;
+  text-shadow:1px 1px 0 #000;
+}
+
+@keyframes scr-twinkle {
+  0%, 100% { opacity:.25; transform:scale(.85); }
+  50% { opacity:1; transform:scale(1.22); }
+}
+
+@keyframes scr-bounce {
+  0% { transform:translate(0, 0); color:#00ff66; }
+  25% { transform:translate(510px, 62px); color:#ff00b8; }
+  50% { transform:translate(300px, 300px); color:#00ffff; }
+  75% { transform:translate(38px, 240px); color:#ffff66; }
+  100% { transform:translate(560px, 16px); color:#ffffff; }
+}
+
+@media (max-width:720px) {
+  html, body { height:100%; overflow:hidden; }
+  body { font-size:11px; }
+  .desktop {
+    min-height:calc(100dvh - 30px);
+    height:calc(100dvh - 30px);
+    padding:4px 5px 34px;
+    align-items:center;
+  }
+  .shortcut { display:none; }
+  .window {
+    width:calc(100vw - 10px);
+    max-height:calc(100dvh - 36px);
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+  }
+  .titlebar { height:22px; padding:2px 3px 2px 6px; font-size:11px; }
+  .control { width:16px; height:16px; line-height:10px; }
+  .chrome { flex:1; min-height:0; display:flex; flex-direction:column; }
+  .menu { display:none; }
+  .toolbar { padding:5px 6px; gap:6px; font-size:10px; }
+  .progress { height:15px; }
+  .content {
+    display:flex;
+    flex:1;
+    min-height:0;
+    overflow:hidden;
+    flex-direction:column;
+  }
+  .brand-panel {
+    flex:0 0 auto;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:5px 7px;
+    border-right:0;
+    border-bottom:2px solid var(--mid);
+  }
+  .program-icon { display:none; }
+  .mask-name { font-size:13px; text-align:left; white-space:nowrap; }
+  .side-note { flex:1; margin-top:0; padding:4px 6px; font-size:10px; line-height:1.2; }
+  .main-panel {
+    flex:1;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    padding:6px;
+    border-left:0;
+  }
+  .headline { font-size:13px; line-height:1.15; margin:0 0 4px; }
+  .subhead { font-size:11px; line-height:1.25; max-height:28px; overflow:hidden; margin-bottom:5px; }
+  .grid {
+    flex:1;
+    min-height:0;
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) 88px;
+    grid-template-rows:auto minmax(0, 1fr);
+    gap:5px;
+  }
+  .group { min-height:0; }
+  .group-title { padding:3px 5px; font-size:10px; }
+  .modules { padding:4px; }
+  .modules li {
+    min-height:15px;
+    gap:4px;
+    font-size:9.8px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .box { width:10px; height:10px; border-width:1px; }
+  .visual-stage { min-height:0; height:100%; padding:3px; }
+  .trash { width:42px; height:54px; }
+  .trash-label { bottom:4px; font-size:9px; }
+  .log { height:78px; padding:5px; font-size:9.5px; line-height:1.25; }
+  .footer { flex:0 0 auto; align-items:stretch; flex-direction:column; gap:5px; margin-top:5px; }
+  .status { min-width:0; padding:4px 5px; font-size:10px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .buttons { justify-content:flex-end; gap:5px; }
+  button { min-width:62px; height:22px; font-size:10px; }
+  .taskbar { height:30px; }
+  .start { height:23px; padding:2px 7px 2px 5px; }
+  .task { height:23px; min-width:136px; padding:4px 6px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+  .clock { height:23px; min-width:64px; padding:4px 6px; }
+  .scr-title { font-size:clamp(14px, 5.2vw, 22px); line-height:1.45; }
+  .scr-subtitle { font-size:clamp(9px, 3.3vw, 13px); }
+  .scr-detail { font-size:12px; }
+  .scr-bounce { font-size:12px; }
+  .scr-registered { font-size:11px; }
+}
+</style>
+</head>
+<body>
+<div class="shortcut">
+  <div class="shortcut-icon"><img src="icon_uninstall.PNG" alt=""></div>
+  <div>MASKING.exe</div>
+</div>
+
+<main class="desktop">
+  <section class="window">
+    <div class="titlebar">
+      <span>Uninstalling MASKING.exe</span>
+      <div class="title-controls" aria-hidden="true">
+        <div class="control">_</div>
+        <div class="control">□</div>
+        <div class="control">×</div>
+      </div>
+    </div>
+
+    <div class="chrome">
+      <div class="menu"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
+      <div class="toolbar">
+        <div class="overall-title">uninstalling masking</div>
+        <div class="overall-percent" id="pct">0%</div>
+        <div class="progress"><div class="progress-fill" id="bar"></div></div>
+      </div>
+
+      <div class="content">
+        <aside class="brand-panel">
+          <div class="program-icon"><img src="icon_uninstall.PNG" alt=""></div>
+          <div class="mask-name">MASKING.EXE</div>
+          <div class="side-note">
+            Status: active<br>
+            Permission level: granted
+          </div>
+        </aside>
+
+        <section class="main-panel">
+          <h1 class="headline">Remove MASKING.exe from this system?</h1>
+          <div class="subhead" id="stepText">
+            Setup is scanning behavioral architecture before removing selected components.
+          </div>
+
+          <div class="grid">
+            <div class="group">
+              <div class="group-title">Detected components</div>
+              <ul class="modules" id="modules">
+                <li><span class="box"></span>people_pleasing.dll</li>
+                <li><span class="box"></span>forced_smile.pkg</li>
+                <li><span class="box"></span>social_camouflage.sys</li>
+                <li><span class="box"></span>hypervigilance.exe</li>
+                <li><span class="box"></span>approval_seeking.ai</li>
+                <li><span class="box"></span>emotional_muting.cfg</li>
+                <li><span class="box"></span>survival_mode.exe</li>
+              </ul>
+            </div>
+
+            <div class="group visual-group">
+              <div class="visual-stage">
+                <div class="trash-label">Recycle Bin</div>
+                <div class="trash">
+                  <img class="trash-frame" id="trashFrame" src="papelera_windows/1.png" alt="">
+                </div>
+              </div>
+            </div>
+
+            <div class="group" style="grid-column:1 / -1;">
+              <div class="group-title">System log</div>
+              <div class="log" id="log"></div>
+            </div>
+          </div>
+
+          <div class="footer">
+            <div class="status" id="status">Preparing uninstall wizard...</div>
+            <div class="buttons">
+              <button id="back" disabled>Back</button>
+              <button id="next">Next</button>
+              <button id="cancel">Cancel</button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section class="screensaver" id="screensaver" aria-live="polite">
+        <div class="starfield" id="starfield"></div>
+        <div class="scr-label">AUTHENTICITY.SCR</div>
+        <div class="scr-bounce">MASKING.exe removed</div>
+        <div class="scr-center">
+          <div class="scr-title">Uninstall<br>Complete</div>
+          <div class="scr-subtitle">WELCOME BACK</div>
+          <div class="scr-detail">authentic_identity.core is now running</div>
+        </div>
+        <div class="scr-registered">by @SiraPerriki</div>
+      </section>
+    </div>
+  </section>
+</main>
+
+<footer class="taskbar">
+  <div class="start"><span class="start-mark"></span>Start</div>
+  <div class="task">Uninstalling MASKING.exe</div>
+  <div class="clock" id="clock">--:--</div>
+</footer>
+
+<script>
+const bar = document.getElementById('bar');
+const pct = document.getElementById('pct');
+const statusLine = document.getElementById('status');
+const stepText = document.getElementById('stepText');
+const log = document.getElementById('log');
+const modules = [...document.querySelectorAll('#modules li')];
+const screensaver = document.getElementById('screensaver');
+const starfield = document.getElementById('starfield');
+const next = document.getElementById('next');
+const cancel = document.getElementById('cancel');
+const clock = document.getElementById('clock');
+const trashFrame = document.getElementById('trashFrame');
+const trashFrames = Array.from({ length: 19 }, (_, i) => `papelera_windows/${i + 1}.png`);
+let trashFrameIndex = 0;
+
+const steps = [
+  ['Scanning adaptive responses...', 'Finding behavior modules and dependency hooks.', 8],
+  ['Stopping performative_personality.sys...', 'Terminating active social camouflage processes.', 18],
+  ['Unlinking external validation...', 'Disconnecting audience_feedback.loop and social_acceptance.api.', 31],
+  ['Removing emotional suppression...', 'Restoring sadness, anger, vulnerability, and authenticity.', 45],
+  ['Removing identity overlays...', 'Deleting adaptive templates and rebuilt public-facing masks.', 58],
+  ['Force terminating hypervigilance.exe...', 'A resistant process required manual confirmation.', 70],
+  ['Cleaning trauma-linked remnants...', 'Moving survival_mode.exe fragments to Recycle Bin.', 82],
+  ['Restoring boundaries and self trust...', 'Registering direct communication and internal safety.', 93],
+  ['Uninstall complete.', 'MASKING.exe has been successfully removed.', 100],
+];
+
+function setProgress(value) {
+  bar.style.width = value + '%';
+  pct.textContent = value + '%';
+}
+
+function addLog(text) {
+  const line = document.createElement('div');
+  line.className = 'log-line';
+  line.textContent = '> ' + text;
+  log.appendChild(line);
+  log.scrollTop = log.scrollHeight;
+}
+
+function setClock() {
+  const now = new Date();
+  clock.textContent = now.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+}
+
+function animateTrash() {
+  trashFrameIndex = (trashFrameIndex + 1) % trashFrames.length;
+  trashFrame.src = trashFrames[trashFrameIndex];
+}
+
+function buildScreensaverStars() {
+  const colors = ['#fff4ff', '#55f6ff', '#ff4bd8', '#fff46a', '#5cffb1'];
+  const glyphs = ['*', '+', '·', '✦'];
+  const stars = Array.from({ length: 42 }, (_, i) => {
+    const color = colors[i % colors.length];
+    const glyph = glyphs[i % glyphs.length];
+    const size = 8 + ((i * 7) % 13);
+    const duration = 1.2 + ((i * 5) % 18) / 10;
+    return `<span class="scr-star" style="--x:${(i * 23) % 96}%;--y:${(i * 41) % 92}%;--c:${color};--s:${size}px;--d:${duration}s;">${glyph}</span>`;
+  }).join('');
+  starfield.innerHTML = stars;
+}
+
+function showScreensaver() {
+  screensaver.classList.add('show');
+}
+
+function runStep(index = 0) {
+  if (index >= steps.length) return;
+  const [status, detail, value] = steps[index];
+  statusLine.textContent = status;
+  stepText.textContent = detail;
+  setProgress(value);
+  setTimeout(() => addLog(status), 1300);
+
+  if (modules[index]) {
+    modules.forEach(item => item.classList.remove('active'));
+    modules[index].classList.add('active');
+    setTimeout(() => modules[index].classList.add('done'), 2700);
+  }
+
+  if (value === 100) {
+    modules.forEach(item => item.classList.add('done'));
+    next.textContent = 'Finish';
+    cancel.disabled = true;
+    addLog('new process: authentic_identity.core [OK]');
+    setTimeout(showScreensaver, 4200);
+    return;
+  }
+
+  setTimeout(() => runStep(index + 1), 6200);
+}
+
+next.addEventListener('click', () => {
+  if (pct.textContent === '100%') showScreensaver();
+});
+
+cancel.addEventListener('click', () => {
+  addLog('cancel rejected: permission to continue already granted');
+});
+
+setClock();
+setInterval(setClock, 30000);
+buildScreensaverStars();
+trashFrames.forEach(src => {
+  const img = new Image();
+  img.src = src;
+});
+setInterval(animateTrash, 500);
+setProgress(0);
+addLog('permission level: granted');
+setTimeout(() => runStep(), 1400);
+</script>
+</body>
+</html>

@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desinstalando MASKING.exe</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg:      #05080a;
+  --term:    #090d10;
+  --green:   #4dffa0;
+  --gdim:    #1d6640;
+  --cyan:    #00d9f5;
+  --white:   #d8e8de;
+  --amber:   #ffb833;
+  --red:     #ff4f6e;
+  --fuchsia: #ff2bd6;
+  --blue:    #5ab8ff;
+  --orange:  #ff9100;
+}
+
+body {
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px 20px 60px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+.window {
+  width: 100%;
+  max-width: 760px;
+  border-radius: 11px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.05),
+    0 50px 120px rgba(0,0,0,0.85),
+    0 0 100px rgba(77,255,160,0.04);
+}
+
+.titlebar {
+  background: #111918;
+  padding: 13px 18px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  user-select: none;
+}
+
+.dot { width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+.dot.r { background:#ff5f57; }
+.dot.y { background:#ffbd2e; }
+.dot.g { background:#28c840; }
+
+.title-label {
+  flex:1;
+  text-align:center;
+  color:#5d2b58;
+  font-size:11px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  text-shadow:0 0 18px rgba(255,43,214,.22);
+}
+
+.progress-dock {
+  background:#0b1112;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  padding: 12px 18px 13px;
+}
+
+.progress-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:8px;
+}
+
+.progress-title {
+  color:var(--fuchsia);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:2.4px;
+  text-transform:uppercase;
+  text-shadow:0 0 22px rgba(255,43,214,.55);
+}
+
+.progress-pct {
+  color:var(--cyan);
+  min-width:4ch;
+  text-align:right;
+  font-size:12px;
+  font-weight:700;
+  text-shadow:0 0 18px rgba(0,217,245,.42);
+}
+
+.progress-track {
+  height:8px;
+  padding:1px;
+  border:1px solid rgba(77,255,160,.2);
+  background:#05080a;
+  box-shadow:inset 0 0 18px rgba(0,0,0,.8);
+}
+
+.progress-fill {
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg, var(--fuchsia), var(--cyan), var(--green));
+  box-shadow:0 0 18px rgba(255,43,214,.35);
+  transition:width .2s linear;
+}
+
+.term {
+  background: var(--term);
+  padding: 32px 38px 74px;
+  min-height: 65vh;
+  max-height: 88vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* CRT scanlines overlay */
+.term::after {
+  content:'';
+  position:fixed; top:0; left:0; right:0; bottom:0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px, transparent 3px,
+    rgba(0,0,0,0.045) 3px, rgba(0,0,0,0.045) 4px
+  );
+  pointer-events:none;
+  z-index:99;
+}
+
+.term::-webkit-scrollbar { width:3px; }
+.term::-webkit-scrollbar-track { background:transparent; }
+.term::-webkit-scrollbar-thumb { background:var(--gdim); border-radius:2px; }
+
+/* ── Base line ── */
+.L {
+  font-size:13px;
+  line-height:1.9;
+  white-space:pre;
+  position:relative;
+  z-index:2;
+  animation: slide-in 0.14s ease-out;
+}
+@keyframes slide-in {
+  from { opacity:0; transform:translateX(-4px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+
+/* ── Type classes ── */
+.L.h    { color:var(--cyan); font-weight:700; font-size:14.5px; letter-spacing:2.5px;
+          text-shadow:0 0 28px rgba(0,217,245,.45),0 0 56px rgba(0,217,245,.15); }
+.L.mask {
+  color:var(--fuchsia);
+  font-weight:700;
+  font-size:27px;
+  line-height:1.35;
+  letter-spacing:5px;
+  text-transform:uppercase;
+  text-shadow:
+    0 0 22px rgba(255,43,214,.8),
+    0 0 58px rgba(255,43,214,.45),
+    0 0 110px rgba(255,43,214,.2);
+}
+.L.info { color:var(--white); font-weight:300; opacity:.72; }
+.L.n    { color:var(--green); text-shadow:0 0 10px rgba(77,255,160,.2); }
+.L.d    { color:var(--gdim); }
+.L.sep  { color:var(--gdim); opacity:.28; }
+.L.wh   { color:var(--amber); font-weight:600; text-shadow:0 0 22px rgba(255,184,51,.4); }
+.L.w    { color:var(--amber); text-shadow:0 0 14px rgba(255,184,51,.25); }
+.L.p    { color:var(--white); }
+.L.inp  { color:#fff; font-weight:600; }
+.L.mod  { color:var(--green); opacity:.78; }
+.L.suc  { color:var(--green); }
+.L.frc  { color:var(--red); font-weight:700; text-shadow:0 0 18px rgba(255,79,110,.4); }
+.L.rst  { color:var(--blue); }
+.L.rmv  { color:var(--orange); }
+.L.ina  { color:#415a4d; }
+.L.prg  { color:var(--cyan); text-shadow:0 0 16px rgba(0,217,245,.4); font-size:14px; }
+.L.new  { color:#8effc0; text-shadow:0 0 14px rgba(142,255,192,.3); }
+.L.com  { color:var(--cyan); font-weight:700; font-size:16px; letter-spacing:4px;
+          text-shadow:0 0 40px rgba(0,217,245,.55),0 0 80px rgba(0,217,245,.2); }
+.L.stb  { color:#00ff99; font-weight:700; text-shadow:0 0 26px rgba(0,255,153,.55); }
+.L.wel  { color:#fff; font-weight:700; font-size:11px; line-height:1.12; letter-spacing:0;
+          text-shadow:0 0 20px rgba(255,255,255,.55),0 0 42px rgba(255,43,214,.25);
+          margin-top:4px; }
+.L.sig  { color:#7ab59a; font-size:12px; letter-spacing:1.5px; opacity:.78; }
+
+/* ── Inline tags ── */
+.ok   { color:#00ff88; font-weight:700; }
+.fok  { color:var(--red); font-weight:700; }
+.rok  { color:var(--orange); font-weight:600; }
+.rstr { color:var(--blue); font-weight:600; }
+.inak { color:#415a4d; }
+.ambs { color:var(--amber); }
+.maskref { color:var(--fuchsia); font-weight:700; text-shadow:0 0 20px rgba(255,43,214,.7); }
+.grn  { color:#00ff88; }
+.core-char { display:inline-block; min-width:1.25ch; color:var(--fuchsia); text-shadow:0 0 18px rgba(255,43,214,.65); transition:color .18s ease, opacity .18s ease, transform .18s ease; }
+.core-char.drop { color:#39213a; opacity:.45; text-shadow:none; transform:translateY(1px); }
+.core-noise { color:#ff8cf0; opacity:.75; }
+
+.heart-bloom {
+  height:162px;
+  position:relative;
+  z-index:2;
+  margin-top:8px;
+  overflow:visible;
+}
+
+.particle {
+  position:absolute;
+  left:var(--x, 50%);
+  bottom:0;
+  color:var(--c, var(--fuchsia));
+  font-size:var(--s, 13px);
+  opacity:0;
+  font-weight:700;
+  text-shadow:0 0 14px currentColor;
+  animation:particle-rise var(--dur, 3.5s) ease-out forwards;
+  animation-delay:var(--delay, 0s);
+}
+
+.particle.dot {
+  width:var(--s, 6px);
+  height:var(--s, 6px);
+  border-radius:50%;
+  background:currentColor;
+  font-size:0;
+}
+
+@keyframes particle-rise {
+  0% { opacity:0; transform:translate(-50%, 22px) scale(.58) rotate(var(--r0, -12deg)); }
+  14% { opacity:.95; }
+  54% { opacity:.8; }
+  100% { opacity:0; transform:translate(calc(-50% + var(--drift, 0px)), var(--rise, -138px)) scale(var(--end, 1.55)) rotate(var(--r1, 18deg)); }
+}
+
+.fireworks-show {
+  position:absolute;
+  left:0;
+  right:0;
+  top:42%;
+  height:230px;
+  transform:translateY(-50%);
+  overflow:visible;
+  pointer-events:none;
+  z-index:1;
+}
+
+.firework-spark {
+  position:absolute;
+  left:var(--x);
+  top:var(--y);
+  color:var(--c);
+  font-size:var(--s, 13px);
+  font-weight:700;
+  opacity:0;
+  text-shadow:0 0 12px currentColor, 0 0 26px currentColor;
+  animation:firework-pop var(--dur, 2.2s) ease-out forwards;
+  animation-delay:var(--delay, 0s);
+}
+
+@keyframes firework-pop {
+  0% { opacity:0; transform:translate(-50%, -50%) scale(.2); }
+  12% { opacity:1; transform:translate(-50%, -50%) scale(1.25); }
+  100% { opacity:0; transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(.72) rotate(var(--rot, 90deg)); }
+}
+
+.final-safe-space { height:82px; }
+
+/* ── Blinking cursor ── */
+.cursor {
+  display:inline-block;
+  width:7px; height:13px;
+  background:var(--green);
+  margin-left:2px;
+  vertical-align:text-bottom;
+  animation:blink 1s step-end infinite;
+  border-radius:1px;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+@media (max-width: 560px) {
+  body { padding: 24px 10px 42px; }
+  .progress-dock { padding: 10px 12px 11px; }
+  .progress-title { font-size:10px; letter-spacing:1.6px; }
+  .term { padding: 24px 18px 68px; }
+  .L { font-size:11.5px; }
+  .L.mask { font-size:22px; letter-spacing:3px; }
+  .L.wel { font-size:7.6px; }
+  .heart-bloom { height:132px; }
+  .fireworks-show { top:44%; height:190px; }
+}
+</style>
+</head>
+<body>
+
+<div class="window">
+  <div class="titlebar">
+    <div class="dot r"></div>
+    <div class="dot y"></div>
+    <div class="dot g"></div>
+    <div class="title-label">terminal — MASKING.exe — desinstalar</div>
+  </div>
+  <div class="progress-dock" aria-label="Progreso total de desinstalación">
+    <div class="progress-head">
+      <div class="progress-title">desinstalando masking</div>
+      <div class="progress-pct" id="totalPct">0%</div>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="totalFill"></div>
+    </div>
+  </div>
+  <div class="term" id="term">
+    <div id="out"></div>
+    <span class="cursor" id="cur"></span>
+  </div>
+</div>
+
+<script>
+const out  = document.getElementById('out');
+const term = document.getElementById('term');
+const cur  = document.getElementById('cur');
+const totalFill = document.getElementById('totalFill');
+const totalPct  = document.getElementById('totalPct');
+
+let T = 750;  // global delay accumulator (ms from page load)
+const SPEED = 1.22;
+const INTRO_SLOW_UNTIL = 7000;
+const INTRO_SPEED = 1.9;
+const P = 46; // character padding for aligned status columns
+const startedAt = performance.now();
+
+/* ────────────────────────────── helpers ── */
+
+function q(fn, d = 110) {
+  T += d * (T < INTRO_SLOW_UNTIL ? INTRO_SPEED : SPEED);
+  setTimeout(fn, T);
+}
+
+function scroll() { term.scrollTop = term.scrollHeight; }
+
+function addEl(el) { out.appendChild(el); scroll(); }
+
+// Plain-text line
+function L(text, cls, pause = 115) {
+  q(() => {
+    const d = document.createElement('div');
+    d.className = `L ${cls}`;
+    d.textContent = text;
+    addEl(d);
+  }, pause);
+}
+
+function TYPE(text, cls, pause = 115, charDelay = 42) {
+  q(() => {
+    const d = document.createElement('div');
+    d.className = `L ${cls}`;
+    addEl(d);
+    let i = 0;
+    const typer = setInterval(() => {
+      d.textContent = text.slice(0, i + 1);
+      i += 1;
+      scroll();
+      if (i >= text.length) clearInterval(typer);
+    }, charDelay);
+  }, pause);
+  T += text.length * charDelay;
+}
+
+// HTML line (for coloured inline spans)
+function H(html, cls, pause = 115) {
+  q(() => {
+    const d = document.createElement('div');
+    d.className = `L ${cls}`;
+    d.innerHTML = html;
+    addEl(d);
+  }, pause);
+}
+
+// Empty spacer
+function blank(pause = 90) {
+  q(() => {
+    const d = document.createElement('div');
+    d.className = 'L d';
+    d.innerHTML = '\u00a0'; // &nbsp;
+    addEl(d);
+  }, pause);
+}
+
+// Separator line
+function sep(pause = 220) {
+  L('─'.repeat(P + 4), 'sep', pause);
+}
+
+// Padded status line: label ........ [TAG]
+function SL(label, tag, tagCls, pause = 285) {
+  q(() => {
+    const d = document.createElement('div');
+    d.className = 'L suc';
+    d.innerHTML = label.padEnd(P, ' ') + `<span class="${tagCls}">[${tag}]</span>`;
+    addEl(d);
+  }, pause);
+}
+
+// "User input" line — types the char after a brief pause
+function INP(text, pause = 900) {
+  q(() => {
+    const d = document.createElement('div');
+    d.className = 'L inp';
+    d.textContent = '> ';
+    addEl(d);
+    setTimeout(() => { d.textContent = text; scroll(); }, 520);
+  }, pause);
+}
+
+/* ────────────────────────────── sequence ── */
+
+// — Init —
+L('MASKING.EXE', 'mask', 0);
+TYPE('INICIANDO PROCESO DE DESINSTALACIÓN...', 'h', 360, 48);
+blank(420);
+H(`<span style="color:#7ab59a">objetivo:</span>         <span class="maskref">MASKING.exe</span>`, 'info', 300);
+H(`<span style="color:#7ab59a">estado:</span>           <span class="ambs">activo</span>`, 'info', 160);
+H(`<span style="color:#7ab59a">nivel de permiso:</span> <span class="grn">concedido</span>`, 'info', 160);
+
+sep(470);
+blank(210);
+
+L('analizando arquitectura conductual...', 'd', 360);
+L('analizando respuestas adaptativas...', 'd', 500);
+L('analizando capas de supresión emocional...', 'd', 520);
+
+blank(430);
+L('módulos detectados:', 'n', 310);
+blank(160);
+
+[
+  'complacer_a_otros.dll',
+  'sonrisa_forzada.pkg',
+  'camuflaje_social.sys',
+  'hipervigilancia.exe',
+  'busqueda_aprobacion.ai',
+  'silenciamiento_emocional.cfg',
+  'evitacion_conflicto.dll',
+  'fragmentacion_identidad.pkg',
+  'sobreexplicacion.exe',
+  'personalidad_performativa.sys',
+  'dependencia_validacion.ai',
+  'mimetismo_automatico.dll',
+  'modo_supervivencia.exe',
+  'respuesta_verguenza.pkg',
+  'abandono_de_si.sys',
+].forEach(m => L(`  - ${m}`, 'mod', 410));
+
+blank(320);
+sep(470);
+blank(360);
+
+L('¿comenzar desinstalación? [S/N]', 'p', 750);
+blank(160);
+INP('> S', 1300);
+
+blank(260);
+sep(320);
+blank(230);
+
+// — Stop processes —
+L('deteniendo procesos activos...', 'n', 360);
+blank(160);
+L('terminando:', 'd', 260);
+
+SL('  - personalidad_performativa.sys', 'OK', 'ok', 350);
+SL('  - busqueda_aprobacion.ai',        'OK', 'ok', 320);
+SL('  - mimetismo_automatico.dll',      'OK', 'ok', 350);
+
+blank(520);
+L('advertencia:', 'wh', 580);
+L('  hipervigilancia.exe se resiste al cierre...', 'w', 390);
+blank(210);
+L('¿forzar terminación? [S/N]', 'p', 780);
+blank(160);
+INP('> S', 1150);
+blank(190);
+
+q(() => {
+  const d = document.createElement('div');
+  d.className = 'L frc';
+  d.innerHTML = '  hipervigilancia.exe'.padEnd(P, ' ') + '<span class="fok">[FORZADO]</span>';
+  addEl(d);
+}, 580);
+
+blank(470);
+sep(440);
+blank(260);
+
+// — External validation —
+L('desconectando validación externa...', 'n', 370);
+blank(160);
+L('desvinculando:', 'd', 260);
+
+SL('  - retroalimentacion_publico.loop', 'OK', 'ok', 310);
+SL('  - aceptacion_social.api',          'OK', 'ok', 290);
+SL('  - miedo_al_rechazo.modulo',        'OK', 'ok', 310);
+
+blank(230);
+L('dependencia externa reducida.', 'd', 390);
+
+blank(330);
+sep(440);
+blank(260);
+
+// — Emotional suppression —
+L('eliminando supresión emocional...', 'n', 370);
+blank(160);
+L('eliminando:', 'd', 260);
+
+SL('  - silenciamiento_emocional.cfg', 'OK', 'ok', 310);
+SL('  - sonrisa_forzada.pkg',          'OK', 'ok', 290);
+SL('  - evitacion_conflicto.dll',      'OK', 'ok', 310);
+
+blank(340);
+L('restaurando rango emocional...', 'd', 450);
+blank(160);
+L('estado:', 'd', 210);
+
+['tristeza', 'rabia', 'vulnerabilidad', 'autenticidad'].forEach(e => {
+  q(() => {
+    const label = '  - ' + e;
+    const d = document.createElement('div');
+    d.className = 'L rst';
+    d.innerHTML = label.padEnd(P, ' ') + '<span class="rstr">[RESTAURADA]</span>';
+    addEl(d);
+  }, 370);
+});
+
+blank(360);
+sep(460);
+blank(260);
+
+// — Identity overlays —
+L('eliminando capas de identidad...', 'n', 370);
+blank(160);
+L('desinstalando:', 'd', 260);
+
+SL('  - camuflaje_social.sys',        'OK', 'ok', 310);
+SL('  - masking_adaptativo.interface', 'OK', 'ok', 310);
+
+['A', 'B', 'C'].forEach(v => {
+  q(() => {
+    const label = `  - plantilla_personalidad_${v}`;
+    const d = document.createElement('div');
+    d.className = 'L rmv';
+    d.innerHTML = label.padEnd(P, ' ') + '<span class="rok">[ELIMINADA]</span>';
+    addEl(d);
+  }, 320);
+});
+
+blank(470);
+L('advertencia:', 'wh', 580);
+L('  firma de identidad central inestable...', 'w', 390);
+blank(210);
+L('reconstruyendo perfil auténtico...', 'd', 720);
+
+blank(370);
+sep(460);
+blank(260);
+
+// — Trauma responses —
+L('limpiando respuestas de trauma...', 'n', 370);
+blank(160);
+L('restos detectados:', 'd', 260);
+L('  - respuesta_verguenza.pkg', 'mod', 210);
+L('  - abandono_de_si.sys',      'mod', 200);
+L('  - modo_supervivencia.exe',  'mod', 200);
+blank(290);
+L('eliminando...', 'd', 390);
+blank(210);
+
+q(() => {
+  const d = document.createElement('div');
+  d.className = 'L prg';
+  const chars = 'MASKING.exe'.split('').map(ch => `<span class="core-char">${ch}</span>`).join('');
+  d.innerHTML = `  núcleo: ${chars}  <span class="core-noise">/ desvinculando</span>`;
+  addEl(d);
+
+  const nodes = d.querySelectorAll('.core-char');
+  nodes.forEach((node, i) => {
+    setTimeout(() => {
+      node.classList.add('drop');
+      if (i === nodes.length - 1) {
+        d.innerHTML = '  núcleo: <span class="core-noise">firma de MASKING.exe disuelta</span>';
+      }
+      scroll();
+    }, 240 + i * 170);
+  });
+}, 520);
+
+T += 2300;
+
+// Animated progress bar (single element, updates in place)
+q(() => {
+  const d = document.createElement('div');
+  d.className = 'L prg';
+  d.textContent = '  ░░░░░░░░░░   0%';
+  addEl(d);
+  [
+    ['████░░░░░░', ' 40%',  350],
+    ['██████░░░░', ' 60%',  750],
+    ['███████░░░', ' 73%', 1150],
+    ['████████░░', ' 84%', 1550],
+    ['█████████░', ' 96%', 1950],
+    ['██████████', '100%', 2350],
+  ].forEach(([bar, pct, delay]) => {
+    setTimeout(() => {
+      d.textContent = `  ${bar}  ${pct}`;
+      scroll();
+    }, delay);
+  });
+}, 520);
+
+T += 3900; // let animation finish before continuing
+
+blank(380);
+L('conductas de masking vinculadas al trauma eliminadas.', 'n', 420);
+
+blank(360);
+sep(460);
+blank(260);
+
+// — Cache —
+L('limpiando conversaciones en caché...', 'n', 370);
+blank(160);
+L('eliminando:', 'd', 260);
+
+SL('  - respuestas_ensayadas.tmp',              'OK', 'ok', 310);
+SL('  - archivo_risa_falsa.zip',                'OK', 'ok', 290);
+SL('  - opiniones_diluidas.cache',              'OK', 'ok', 290);
+SL('  - version_socialmente_aceptable.backup',  'OK', 'ok', 320);
+
+blank(230);
+L('caché limpiada.', 'd', 390);
+
+blank(360);
+sep(460);
+blank(260);
+
+// — Recalibration —
+L('recalibración del sistema en curso...', 'n', 370);
+blank(160);
+L('restaurando:', 'd', 260);
+
+[
+  'límites personales',
+  'honestidad emocional',
+  'comunicación directa',
+  'confianza propia',
+  'seguridad interna',
+].forEach(r => SL('  - ' + r, 'OK', 'ok', 330));
+
+blank(440);
+sep(580);
+blank(340);
+
+// — Final scan —
+L('análisis final...', 'd', 470);
+blank(210);
+
+H(`procesos de masking restantes:  <span class="ok" style="font-weight:700">0</span>`, 'n', 370);
+H(`capas de supresión restantes:   <span class="ok" style="font-weight:700">0</span>`, 'n', 270);
+H(`conexiones de validación externa: <span class="inak">inactivas</span>`, 'ina', 270);
+
+blank(530);
+sep(850);
+blank(540);
+
+// — Complete —
+L('DESINSTALACIÓN COMPLETA', 'com', 1100);
+blank(290);
+L('MASKING.exe se ha eliminado correctamente.', 'd', 470);
+
+blank(370);
+L('nuevos procesos detectados:', 'n', 640);
+blank(160);
+
+[
+  'expresion_genuina.exe',
+  'presencia_emocional.sys',
+  'autorespeto.dll',
+  'identidad_autentica.core',
+].forEach(p => L(`  - ${p}`, 'new', 380));
+
+blank(380);
+L('estado del sistema: ESTABLE', 'stb', 650);
+
+blank(480);
+sep(600);
+blank(340);
+
+L('reinicio requerido.', 'd', 470);
+blank(210);
+L('¿reiniciar ahora? [S/N]', 'p', 780);
+blank(160);
+INP('> S', 1350);
+
+blank(320);
+sep(430);
+blank(320);
+
+L('reiniciando...', 'd', 470);
+blank(210);
+L('...', 'd', 1050);
+
+blank(900);
+
+q(() => {
+  const d = document.createElement('div');
+  d.className = 'L wel';
+  d.textContent = String.raw` ____ ___ _____ _   ___     _______ _   _ ___ ____    _
+| __ )_ _| ____| \ | \ \   / / ____| \ | |_ _|  _ \  / \
+|  _ \| ||  _| |  \| |\ \ / /|  _| |  \| || || | | |/ _ \
+| |_) | || |___| |\  | \ V / | |___| |\  || || |_| / ___ \
+|____/___|_____|_| \_|  \_/  |_____|_| \_|___|____/_/   _/
+
+ ____  _____  __     ___   _ _____ _   _____  _    
+|  _ \| ____| \ \   / / | | | ____| | |_   _|/ \   
+| | | |  _|    \ \ / /| | | |  _| | |   | | / _ \  
+| |_| | |___    \ V / | |_| | |___| |___| |/ ___ \ 
+|____/|_____|    \_/   \___/|_____|_____|_/_/   _/`;
+  addEl(d);
+  // Cursor turns white
+  cur.style.background = '#ffffff';
+  cur.style.boxShadow  = '0 0 14px rgba(255,255,255,0.6)';
+}, 1300);
+
+blank(700);
+
+q(() => {
+  const centers = [
+    ['24%', '44%', '.0s'],
+    ['50%', '32%', '.38s'],
+    ['76%', '48%', '.72s'],
+    ['38%', '70%', '1.05s'],
+  ];
+  const colors = ['#ff2bd6', '#00d9f5', '#4dffa0', '#ffffff', '#fff36d'];
+  const glyphs = ['✦', '*', '+', '·'];
+  const sparks = [];
+  centers.forEach(([x, y, baseDelay], ci) => {
+    for (let i = 0; i < 18; i++) {
+      const angle = (Math.PI * 2 * i) / 18;
+      const radius = 42 + ((i + ci) % 4) * 13;
+      const dx = Math.round(Math.cos(angle) * radius);
+      const dy = Math.round(Math.sin(angle) * radius);
+      const color = colors[(i + ci) % colors.length];
+      const glyph = glyphs[(i + ci) % glyphs.length];
+      const size = 10 + ((i * 3 + ci) % 10);
+      sparks.push(`<span class="firework-spark" style="--x:${x};--y:${y};--dx:${dx}px;--dy:${dy}px;--c:${color};--s:${size}px;--delay:calc(${baseDelay} + ${i * 0.018}s);--dur:${2.05 + ci * 0.18}s;--rot:${i * 24}deg;">${glyph}</span>`);
+    }
+  });
+  const show = document.createElement('div');
+  show.className = 'fireworks-show';
+  show.innerHTML = sparks.join('');
+  addEl(show);
+}, 360);
+
+q(() => {
+  const particles = [
+    ['♥', '10%', '-34px', '11px', 'var(--cyan)',    '0s',   '3.8s', '-128px', '1.45', '-10deg', '18deg', ''],
+    ['✦', '15%',  '22px', '16px', '#ffffff',        '.1s',  '4.2s', '-150px', '1.6',  '8deg',  '90deg', ''],
+    ['•', '20%', '-12px', '7px',  'var(--green)',   '.24s', '3.7s', '-118px', '1.2',  '0deg',  '0deg',  'dot'],
+    ['♥', '26%',  '36px', '18px', 'var(--fuchsia)', '.18s', '4.5s', '-160px', '1.7',  '-6deg', '16deg', ''],
+    ['+', '32%', '-42px', '13px', 'var(--cyan)',    '.4s',  '3.9s', '-138px', '1.35', '0deg',  '180deg',''],
+    ['✧', '39%',   '8px', '21px', '#ff8cf0',        '.06s', '4.6s', '-172px', '1.65', '14deg', '110deg',''],
+    ['·', '45%', '-24px', '6px',  '#ffffff',        '.54s', '3.5s', '-112px', '1.1',  '0deg',  '0deg',  'dot'],
+    ['♥', '51%',  '18px', '13px', 'var(--green)',   '.32s', '4.1s', '-146px', '1.55', '-9deg', '14deg', ''],
+    ['*', '57%',  '46px', '17px', 'var(--cyan)',    '.5s',  '4.3s', '-166px', '1.5',  '0deg',  '220deg',''],
+    ['♥', '63%', '-36px', '22px', 'var(--fuchsia)', '.22s', '4.8s', '-178px', '1.72', '-12deg','20deg', ''],
+    ['✦', '69%',  '28px', '12px', '#ffffff',        '.72s', '3.8s', '-132px', '1.38', '0deg',  '130deg',''],
+    ['•', '74%', '-16px', '8px',  '#ff8cf0',        '.44s', '4s',   '-152px', '1.2',  '0deg',  '0deg',  'dot'],
+    ['+', '80%',  '38px', '14px', 'var(--green)',   '.88s', '3.6s', '-126px', '1.34', '0deg',  '180deg',''],
+    ['♥', '86%', '-28px', '16px', '#ffffff',        '.62s', '4.2s', '-154px', '1.52', '-7deg', '17deg', ''],
+    ['✧', '91%',  '14px', '18px', 'var(--fuchsia)', '.78s', '4.4s', '-170px', '1.6',  '12deg', '100deg',''],
+    ['·', '94%', '-44px', '5px',  'var(--cyan)',    '1s',   '3.4s', '-116px', '1.05', '0deg',  '0deg',  'dot'],
+  ];
+  const bloom = document.createElement('div');
+  bloom.className = 'heart-bloom';
+  bloom.innerHTML = particles.map(([glyph, x, drift, size, color, delay, dur, rise, end, r0, r1, cls]) =>
+    `<span class="particle ${cls}" style="--x:${x};--drift:${drift};--s:${size};--c:${color};--delay:${delay};--dur:${dur};--rise:${rise};--end:${end};--r0:${r0};--r1:${r1};">${glyph}</span>`
+  ).join('');
+  addEl(bloom);
+}, 520);
+
+q(() => {
+  const d = document.createElement('div');
+  d.className = 'L sig';
+  d.textContent = 'firmado: @SiraPerriki';
+  addEl(d);
+}, 960);
+
+q(() => {
+  const safe = document.createElement('div');
+  safe.className = 'final-safe-space';
+  addEl(safe);
+}, 300);
+
+const totalDuration = T + 900;
+const progressTimer = setInterval(() => {
+  const pct = Math.min(100, Math.round(((performance.now() - startedAt) / totalDuration) * 100));
+  totalFill.style.width = pct + '%';
+  totalPct.textContent = pct + '%';
+  if (pct >= 100) clearInterval(progressTimer);
+}, 180);
+</script>
+</body>
+</html>
