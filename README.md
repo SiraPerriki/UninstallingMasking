@@ -1,3 +1,5 @@
+
+https://github.com/user-attachments/assets/8710da95-99c9-4706-871e-e3000e9b4331
 # Terminal Emocional
 
 > **Rituales digitales para procesos interiores.**
@@ -15,10 +17,20 @@ Este proyecto **sigue en desarrollo**. Actualmente incluye las secuencias de des
 A continuación se muestran las ejecuciones capturadas de la terminal:
 
 #### Versión en Español
-https://github.com/SiraPerriki/UninstallingMasking/raw/master/masking_Esp.mp4
+
+
+https://github.com/user-attachments/assets/e00d275c-46a8-42a6-a2c5-fc8030414bfc
+
+
 
 #### English Version
-https://github.com/SiraPerriki/UninstallingMasking/raw/master/masking_Eng.mp4
+
+
+
+https://github.com/user-attachments/assets/0508d212-2010-43b0-bf63-7ab9c50e9bb6
+
+
+
 
 ---
 
