@@ -15,10 +15,10 @@ Este proyecto **sigue en desarrollo**. Actualmente incluye las secuencias de des
 A continuación se muestran las ejecuciones capturadas de la terminal:
 
 #### Versión en Español
-<video src="masking_Esp.mp4" controls="controls" width="300"></video>
+https://github.com/SiraPerriki/UninstallingMasking/raw/master/masking_Esp.mp4
 
 #### English Version
-<video src="masking_Eng.mp4" controls="controls" width="300"></video>
+https://github.com/SiraPerriki/UninstallingMasking/raw/master/masking_Eng.mp4
 
 ---
 
