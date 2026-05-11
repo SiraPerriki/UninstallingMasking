@@ -12,7 +12,7 @@
   --bg:      #05080a;
   --term:    #090d10;
   --green:   #4dffa0;
-  --gdim:    #1d6640;
+  --gdim:    #d459ff;
   --cyan:    #00d9f5;
   --white:   #d8e8de;
   --amber:   #ffb833;
@@ -25,16 +25,18 @@
 body {
   background: var(--bg);
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 48px 20px 60px;
+  padding: clamp(18px, 5vh, 48px) clamp(10px, 4vw, 20px) clamp(36px, 7vh, 60px);
   font-family: 'JetBrains Mono', 'Courier New', monospace;
+  overflow-x:hidden;
 }
 
 .window {
   width: 100%;
-  max-width: 760px;
+  max-width: min(760px, calc(100vw - 20px));
   border-radius: 11px;
   overflow: hidden;
   box-shadow:
@@ -62,7 +64,7 @@ body {
   flex:1;
   text-align:center;
   color:#5d2b58;
-  font-size:11px;
+  font-size:clamp(14px, 2.5vw, 18px);
   letter-spacing:3px;
   text-transform:uppercase;
   text-shadow:0 0 18px rgba(255,43,214,.22);
@@ -84,7 +86,7 @@ body {
 
 .progress-title {
   color:var(--fuchsia);
-  font-size:12px;
+  font-size:clamp(16px, 3vw, 20px);
   font-weight:700;
   letter-spacing:2.4px;
   text-transform:uppercase;
@@ -95,7 +97,7 @@ body {
   color:var(--cyan);
   min-width:4ch;
   text-align:right;
-  font-size:12px;
+  font-size:clamp(16px, 3vw, 20px);
   font-weight:700;
   text-shadow:0 0 18px rgba(0,217,245,.42);
 }
@@ -118,10 +120,13 @@ body {
 
 .term {
   background: var(--term);
-  padding: 32px 38px 74px;
-  min-height: 65vh;
-  max-height: 88vh;
+  padding: clamp(22px, 4vw, 32px) clamp(16px, 5vw, 38px) clamp(110px, 15vh, 160px);
+  min-height: min(65vh, 680px);
+  min-height: min(65svh, 680px);
+  max-height: calc(100vh - 92px);
+  max-height: calc(100svh - 92px);
   overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
 }
 
@@ -142,13 +147,19 @@ body {
 .term::-webkit-scrollbar-track { background:transparent; }
 .term::-webkit-scrollbar-thumb { background:var(--gdim); border-radius:2px; }
 
+#out {
+  position:relative;
+  z-index:3;
+}
+
 /* ── Base line ── */
 .L {
-  font-size:13px;
-  line-height:1.9;
-  white-space:pre;
+  font-size:clamp(24px, 4vw, 28px);
+  line-height:1.75;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
   position:relative;
-  z-index:2;
+  z-index:3;
   animation: slide-in 0.14s ease-out;
 }
 @keyframes slide-in {
@@ -157,14 +168,14 @@ body {
 }
 
 /* ── Type classes ── */
-.L.h    { color:var(--cyan); font-weight:700; font-size:14.5px; letter-spacing:2.5px;
+.L.h    { color:var(--cyan); font-weight:700; font-size:clamp(26px, 4.5vw, 30px); letter-spacing:1px;
           text-shadow:0 0 28px rgba(0,217,245,.45),0 0 56px rgba(0,217,245,.15); }
 .L.mask {
   color:var(--fuchsia);
   font-weight:700;
-  font-size:27px;
+  font-size:clamp(40px, 7vw, 48px);
   line-height:1.35;
-  letter-spacing:5px;
+  letter-spacing:clamp(2.6px, .68vw, 5px);
   text-transform:uppercase;
   text-shadow:
     0 0 22px rgba(255,43,214,.8),
@@ -172,7 +183,7 @@ body {
     0 0 110px rgba(255,43,214,.2);
 }
 .L.info { color:var(--white); font-weight:300; opacity:.72; }
-.L.n    { color:var(--green); text-shadow:0 0 10px rgba(77,255,160,.2); }
+.L.n    { color:var(--cyan); text-shadow:0 0 10px rgba(0,217,245,.2); }
 .L.d    { color:var(--gdim); }
 .L.sep  { color:var(--gdim); opacity:.28; }
 .L.wh   { color:var(--amber); font-weight:600; text-shadow:0 0 22px rgba(255,184,51,.4); }
@@ -184,16 +195,17 @@ body {
 .L.frc  { color:var(--red); font-weight:700; text-shadow:0 0 18px rgba(255,79,110,.4); }
 .L.rst  { color:var(--blue); }
 .L.rmv  { color:var(--orange); }
-.L.ina  { color:#415a4d; }
-.L.prg  { color:var(--cyan); text-shadow:0 0 16px rgba(0,217,245,.4); font-size:14px; }
+.L.ina  { color:#749c87; }
+.L.prg  { color:var(--cyan); text-shadow:0 0 16px rgba(0,217,245,.4); font-size:clamp(24px, 4vw, 28px); }
 .L.new  { color:#8effc0; text-shadow:0 0 14px rgba(142,255,192,.3); }
-.L.com  { color:var(--cyan); font-weight:700; font-size:16px; letter-spacing:4px;
+.L.com  { color:var(--cyan); font-weight:700; font-size:clamp(26px, 4.5vw, 30px); letter-spacing:clamp(1.5px, .4vw, 3px);
           text-shadow:0 0 40px rgba(0,217,245,.55),0 0 80px rgba(0,217,245,.2); }
 .L.stb  { color:#00ff99; font-weight:700; text-shadow:0 0 26px rgba(0,255,153,.55); }
-.L.wel  { color:#fff; font-weight:700; font-size:11px; line-height:1.12; letter-spacing:0;
+.L.wel  { color:#fff; font-weight:700; font-size:clamp(12px, 2.2vw, 16px); line-height:1.12; letter-spacing:0;
           text-shadow:0 0 20px rgba(255,255,255,.55),0 0 42px rgba(255,43,214,.25);
-          margin-top:4px; }
-.L.sig  { color:#7ab59a; font-size:12px; letter-spacing:1.5px; opacity:.78; }
+          margin-top:4px; max-width:100%; white-space:pre; overflow-wrap:normal; }
+.L.sig  { color:#7ab59a; font-size:16px; letter-spacing:1px; opacity:.78; }
+.L.fin  { color:#ffffff; font-weight:700; font-size:clamp(26px, 4.5vw, 30px); text-shadow:0 0 10px #ffffff, 0 0 30px var(--fuchsia), 0 0 60px var(--cyan); letter-spacing:1px; }
 
 /* ── Inline tags ── */
 .ok   { color:#00ff88; font-weight:700; }
@@ -211,7 +223,7 @@ body {
 .heart-bloom {
   height:162px;
   position:relative;
-  z-index:2;
+  z-index:4;
   margin-top:8px;
   overflow:visible;
 }
@@ -225,7 +237,7 @@ body {
   opacity:0;
   font-weight:700;
   text-shadow:0 0 14px currentColor;
-  animation:particle-rise var(--dur, 3.5s) ease-out forwards;
+  animation:particle-rise var(--dur, 3.5s) ease-out 3 forwards;
   animation-delay:var(--delay, 0s);
 }
 
@@ -245,12 +257,8 @@ body {
 }
 
 .fireworks-show {
-  position:absolute;
-  left:0;
-  right:0;
-  top:42%;
-  height:230px;
-  transform:translateY(-50%);
+  height:0;
+  position:relative;
   overflow:visible;
   pointer-events:none;
   z-index:1;
@@ -265,7 +273,7 @@ body {
   font-weight:700;
   opacity:0;
   text-shadow:0 0 12px currentColor, 0 0 26px currentColor;
-  animation:firework-pop var(--dur, 2.2s) ease-out forwards;
+  animation:firework-pop var(--dur, 2.2s) ease-out 5 forwards;
   animation-delay:var(--delay, 0s);
 }
 
@@ -275,7 +283,7 @@ body {
   100% { opacity:0; transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(.72) rotate(var(--rot, 90deg)); }
 }
 
-.final-safe-space { height:82px; }
+.final-safe-space { height:clamp(160px, 25vh, 220px); }
 
 /* ── Blinking cursor ── */
 .cursor {
@@ -290,15 +298,30 @@ body {
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
 @media (max-width: 560px) {
-  body { padding: 24px 10px 42px; }
+  body { padding: 18px 8px 34px; }
+  .window { border-radius:8px; max-width:calc(100vw - 16px); }
+  .titlebar { padding: 11px 12px; gap:7px; }
+  .dot { width:10px; height:10px; }
+  .title-label { font-size:clamp(12px, 3.5vw, 14px); letter-spacing:1.5px; }
   .progress-dock { padding: 10px 12px 11px; }
-  .progress-title { font-size:10px; letter-spacing:1.6px; }
-  .term { padding: 24px 18px 68px; }
-  .L { font-size:11.5px; }
-  .L.mask { font-size:22px; letter-spacing:3px; }
-  .L.wel { font-size:7.6px; }
-  .heart-bloom { height:132px; }
-  .fireworks-show { top:44%; height:190px; }
+  .progress-head { gap:10px; }
+  .progress-title { font-size:clamp(14px, 4vw, 16px); letter-spacing:1.5px; }
+  .progress-pct { font-size:clamp(14px, 4vw, 16px); }
+  .term { padding: 22px 13px 110px; min-height:calc(100svh - 122px); max-height:calc(100svh - 82px); }
+  .L { font-size:clamp(20px, 5.5vw, 24px); line-height:1.75; }
+  .L.h { font-size:22px; letter-spacing:1px; }
+  .L.mask { font-size:clamp(34px, 9vw, 40px); letter-spacing:2px; }
+  .L.wel { font-size:clamp(8px, 2.4vw, 10px); line-height:1.08; }
+  .heart-bloom { height:148px; }
+  .fireworks-show { height:0; }
+  .final-safe-space { height:200px; }
+}
+
+@media (max-width: 380px) {
+  .term { padding-left:10px; padding-right:10px; }
+  .L { font-size:10px; }
+  .L.mask { font-size:18px; letter-spacing:1.8px; }
+  .L.wel { font-size:6.2px; }
 }
 </style>
 </head>
@@ -326,26 +349,52 @@ body {
   </div>
 </div>
 
+<audio id="bgm" src="masking_consola.mp3" preload="auto" autoplay loop></audio>
+
 <script>
 const out  = document.getElementById('out');
 const term = document.getElementById('term');
 const cur  = document.getElementById('cur');
+const bgm  = document.getElementById('bgm');
 const totalFill = document.getElementById('totalFill');
 const totalPct  = document.getElementById('totalPct');
 
-let T = 750;  // global delay accumulator (ms from page load)
-const SPEED = 1.22;
+let T = 0;  // global delay accumulator (ms from page load)
+let startedAt = 0;
+let progressTimer;
+const ANIMATION_DELAY = 4000;
+const SPEED = 2.4;
 const INTRO_SLOW_UNTIL = 7000;
-const INTRO_SPEED = 1.9;
-const P = 46; // character padding for aligned status columns
-const startedAt = performance.now();
+const INTRO_SPEED = 2.8;
+const P = 36; // character padding for aligned status columns
 
 /* ────────────────────────────── helpers ── */
 
 function q(fn, d = 110) {
   T += d * (T < INTRO_SLOW_UNTIL ? INTRO_SPEED : SPEED);
-  setTimeout(fn, T);
+  setTimeout(fn, ANIMATION_DELAY + T);
 }
+
+function startMusic() {
+  if (!bgm) return;
+  bgm.volume = 0.42;
+  const attempt = bgm.play();
+  if (attempt) attempt.catch(() => {});
+}
+
+function startProgress(totalDuration) {
+  startedAt = performance.now();
+  progressTimer = setInterval(() => {
+    const pct = Math.min(100, Math.round(((performance.now() - startedAt) / totalDuration) * 100));
+    totalFill.style.width = pct + '%';
+    totalPct.textContent = pct + '%';
+    if (pct >= 100) clearInterval(progressTimer);
+  }, 180);
+}
+
+startMusic();
+document.addEventListener('pointerdown', startMusic, { once:true });
+document.addEventListener('keydown', startMusic, { once:true });
 
 function scroll() { term.scrollTop = term.scrollHeight; }
 
@@ -441,7 +490,7 @@ L('analizando respuestas adaptativas...', 'd', 500);
 L('analizando capas de supresión emocional...', 'd', 520);
 
 blank(430);
-L('módulos detectados:', 'n', 310);
+L('MÓDULOS DETECTADOS:', 'n', 310);
 blank(160);
 
 [
@@ -466,7 +515,7 @@ blank(320);
 sep(470);
 blank(360);
 
-L('¿comenzar desinstalación? [S/N]', 'p', 750);
+L('¿COMENZAR DESINSTALACIÓN? [S/N]', 'p', 750);
 blank(160);
 INP('> S', 1300);
 
@@ -475,7 +524,7 @@ sep(320);
 blank(230);
 
 // — Stop processes —
-L('deteniendo procesos activos...', 'n', 360);
+L('DETENIENDO PROCESOS ACTIVOS...', 'n', 360);
 blank(160);
 L('terminando:', 'd', 260);
 
@@ -484,10 +533,10 @@ SL('  - busqueda_aprobacion.ai',        'OK', 'ok', 320);
 SL('  - mimetismo_automatico.dll',      'OK', 'ok', 350);
 
 blank(520);
-L('advertencia:', 'wh', 580);
+L('ADVERTENCIA:', 'wh', 580);
 L('  hipervigilancia.exe se resiste al cierre...', 'w', 390);
 blank(210);
-L('¿forzar terminación? [S/N]', 'p', 780);
+L('¿FORZAR TERMINACIÓN? [S/N]', 'p', 780);
 blank(160);
 INP('> S', 1150);
 blank(190);
@@ -504,7 +553,7 @@ sep(440);
 blank(260);
 
 // — External validation —
-L('desconectando validación externa...', 'n', 370);
+L('DESCONECTANDO VALIDACIÓN EXTERNA...', 'n', 370);
 blank(160);
 L('desvinculando:', 'd', 260);
 
@@ -520,7 +569,7 @@ sep(440);
 blank(260);
 
 // — Emotional suppression —
-L('eliminando supresión emocional...', 'n', 370);
+L('ELIMINANDO SUPRESIÓN EMOCIONAL...', 'n', 370);
 blank(160);
 L('eliminando:', 'd', 260);
 
@@ -529,9 +578,9 @@ SL('  - sonrisa_forzada.pkg',          'OK', 'ok', 290);
 SL('  - evitacion_conflicto.dll',      'OK', 'ok', 310);
 
 blank(340);
-L('restaurando rango emocional...', 'd', 450);
+L('RESTAURANDO RANGO EMOCIONAL...', 'd', 450);
 blank(160);
-L('estado:', 'd', 210);
+L('ESTADO:', 'd', 210);
 
 ['tristeza', 'rabia', 'vulnerabilidad', 'autenticidad'].forEach(e => {
   q(() => {
@@ -548,7 +597,7 @@ sep(460);
 blank(260);
 
 // — Identity overlays —
-L('eliminando capas de identidad...', 'n', 370);
+L('ELIMINANDO CAPAS DE IDENTIDAD...', 'n', 370);
 blank(160);
 L('desinstalando:', 'd', 260);
 
@@ -566,7 +615,7 @@ SL('  - masking_adaptativo.interface', 'OK', 'ok', 310);
 });
 
 blank(470);
-L('advertencia:', 'wh', 580);
+L('ADVERTENCIA:', 'wh', 580);
 L('  firma de identidad central inestable...', 'w', 390);
 blank(210);
 L('reconstruyendo perfil auténtico...', 'd', 720);
@@ -576,7 +625,7 @@ sep(460);
 blank(260);
 
 // — Trauma responses —
-L('limpiando respuestas de trauma...', 'n', 370);
+L('LIMPIANDO RESPUESTAS DE TRAUMA...', 'n', 370);
 blank(160);
 L('restos detectados:', 'd', 260);
 L('  - respuesta_verguenza.pkg', 'mod', 210);
@@ -631,14 +680,14 @@ q(() => {
 T += 3900; // let animation finish before continuing
 
 blank(380);
-L('conductas de masking vinculadas al trauma eliminadas.', 'n', 420);
+L('CONDUCTAS DE MASKING VINCULADAS AL TRAUMA ELIMINADAS.', 'n', 420);
 
 blank(360);
 sep(460);
 blank(260);
 
 // — Cache —
-L('limpiando conversaciones en caché...', 'n', 370);
+L('LIMPIANDO CONVERSACIONES EN CACHÉ...', 'n', 370);
 blank(160);
 L('eliminando:', 'd', 260);
 
@@ -655,7 +704,7 @@ sep(460);
 blank(260);
 
 // — Recalibration —
-L('recalibración del sistema en curso...', 'n', 370);
+L('RECALIBRACIÓN DEL SISTEMA EN CURSO...', 'n', 370);
 blank(160);
 L('restaurando:', 'd', 260);
 
@@ -677,7 +726,7 @@ blank(210);
 
 H(`procesos de masking restantes:  <span class="ok" style="font-weight:700">0</span>`, 'n', 370);
 H(`capas de supresión restantes:   <span class="ok" style="font-weight:700">0</span>`, 'n', 270);
-H(`conexiones de validación externa: <span class="inak">inactivas</span>`, 'ina', 270);
+H(`CONEXIONES DE VALIDACIÓN EXTERNA: <span class="inak">INACTIVAS</span>`, 'ina', 270);
 
 blank(530);
 sep(850);
@@ -686,7 +735,7 @@ blank(540);
 // — Complete —
 L('DESINSTALACIÓN COMPLETA', 'com', 1100);
 blank(290);
-L('MASKING.exe se ha eliminado correctamente.', 'd', 470);
+L('MASKING.EXE SE HA ELIMINADO CORRECTAMENTE.', 'fin', 470);
 
 blank(370);
 L('nuevos procesos detectados:', 'n', 640);
@@ -746,10 +795,10 @@ blank(700);
 
 q(() => {
   const centers = [
-    ['24%', '44%', '.0s'],
-    ['50%', '32%', '.38s'],
-    ['76%', '48%', '.72s'],
-    ['38%', '70%', '1.05s'],
+    ['24%', '-118px', '.0s'],
+    ['50%', '-168px', '.38s'],
+    ['76%', '-126px', '.72s'],
+    ['38%', '-64px', '1.05s'],
   ];
   const colors = ['#ff2bd6', '#00d9f5', '#4dffa0', '#ffffff', '#fff36d'];
   const glyphs = ['✦', '*', '+', '·'];
@@ -813,12 +862,7 @@ q(() => {
 }, 300);
 
 const totalDuration = T + 900;
-const progressTimer = setInterval(() => {
-  const pct = Math.min(100, Math.round(((performance.now() - startedAt) / totalDuration) * 100));
-  totalFill.style.width = pct + '%';
-  totalPct.textContent = pct + '%';
-  if (pct >= 100) clearInterval(progressTimer);
-}, 180);
+setTimeout(() => startProgress(totalDuration), ANIMATION_DELAY);
 </script>
 </body>
 </html>
